@@ -1,6 +1,4 @@
 
-
-
  % STEP1: Intialize the intrinsic parameters and extrinsic parameters
  
  %define intrinisic parametrs
@@ -84,14 +82,12 @@
     noisy_estimated_P = get_estimated_projecion_matrix(p2d_noise,p3d,num_points,P);
 
     [K_noise,cRw_noise] = get_intrinsics_from_proj_matrix(noisy_estimated_P);
-   
-    % K_new = K_new
-    % K_noise = K_noise
 
-    P_difference = P - estimated_P
-    P_noise_difference =P- P_noisy
-    K_difference = K - K_new
-    K_noise_difference = K - K_noise
+
+    P_difference = P - estimated_P;
+    P_noise_difference =P- P_noisy;
+    K_difference = K - K_new;
+    K_noise_difference = K - K_noise;
     % 
     % %Step 9 compute 2dpoints 
     p2d_estimated= calculate_2d_points(num_points,p3d,estimated_P);
@@ -100,8 +96,7 @@
     % 
     p2d_estimated_noise = calculate_2d_points(num_points,p3d,noisy_estimated_P);
     noise_error = calculate_avarege_projection_error(p2d_estimated_noise,p2d);
-    
-
+ 
  end
 
 function random_num = get_random_3d_points(min_range, max_range , num_pooints);
@@ -117,12 +112,12 @@ function p2d = calculate_2d_points(num_points,p3d,P)
         p2d_homeg = [p2d_homeg ; point'];
 
     end
-    %Change to Cartishian     %
+    %Change to Cartishian%
     p2d = p2d_homeg(:, 1:2) ./ p2d_homeg(:, 3); 
  end
 
 
-function noise = getGaussianNoise(lower_limit,upper_limit,num_points)
+function noise = getGaussianNoise( lower_limit, upper_limit,num_points)
     % Define the range and distribution parameters
     mu = 0;            % Mean of the Gaussian distribution
     sigma = 0.51;        % Standard deviation of the Gaussian distribution
@@ -130,8 +125,8 @@ function noise = getGaussianNoise(lower_limit,upper_limit,num_points)
     % Generate random numbers from the Gaussian distribution b/n [-1,1]
     % affecting 95% of the point area 
     noise = normrnd(mu, sigma, num_points,2); % Adjust the number of samples
-    noisy_indices = randperm(num_points, round(0.05*6));% applayin noise only to 95% of the points 
-    noise(noisy_indices,:)=0;
+    noisy_indices = randperm(num_points, round(0.05*num_points));%applaying noise only to 95% of the points 
+    noise(noisy_indices,:)=0; % no noise to 5% of the 2d points
     
  end
 
@@ -140,5 +135,4 @@ function noise = getGaussianNoise(lower_limit,upper_limit,num_points)
     squared_differences = (p2d_new - p2d).^2;
     distance = sum(squared_differences,2);
     error= mean(distance);
-    
  end

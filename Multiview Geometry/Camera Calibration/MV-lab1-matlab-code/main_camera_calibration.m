@@ -117,7 +117,7 @@ function p2d = calculate_2d_points(num_points,p3d,P)
  end
 
 
-function noise = getGaussianNoise(lower_limit,upper_limit,num_points)
+function noise = getGaussianNoise( lower_limit, upper_limit,num_points)
     % Define the range and distribution parameters
     mu = 0;            % Mean of the Gaussian distribution
     sigma = 0.51;        % Standard deviation of the Gaussian distribution
